@@ -66,7 +66,8 @@ public class blackjack
 
 		System.out.println("Welcome to blackjack\nYou got a "+player1+" and a "+player2+"\nYour total is "+player_sum);
 		System.out.println("\nThe dealer has a "+dealer1+" showing, and a hidden card\nHis total is hidden too");
-	
+
+		// TODO first, have player and dealer alternate turns	
 		while ((player_sum < 21) && choice.equals("hit")) {
 //		while (player_sum < 21) {
 			System.out.println("\nYour sum is "+player_sum);
