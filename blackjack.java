@@ -1,53 +1,12 @@
 /*
 program to play blackjack, one player, one round
-
-main()
-	draw 2 initial cards each for player and dealer
-	print the intial cards
-
-	while player_sum < 21
-		- ask player to hit or stay
-			- if hit, turn() for player
-			- if stay, end()
-
-	while dealer_sum < 16
-		- turn() for dealer
-
-	end()
-
-	if player_sum > 21 & dealer_sum > 21, print draw
-	if player_sum > 21, print you lost
-	if delear_sum > 21, print you won
-	if 21 - player_sum < 21 - dealer_sum, print you won
-	else, pring you lost
-
-
-draw()
-	return int card
-
-
-turn()
-	take parameter 'initial_sum'
-	get the next_card with draw()
-	return new_sum + next_card
-
-end()
-	print both sums
-	if player_sum > 21 & dealer_sum > 21, print draw
-	if player_sum > 21, print you lost
-	if delear_sum > 21, print you won
-	if 21 - player_sum < 21 - dealer_sum, print you won
-	else, pring you lost
 */
-
-
 
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class blackjack
 {
-
 	public static void main(String[] args) {
 		
 		Scanner keyboard = new Scanner(System.in);
@@ -61,30 +20,42 @@ public class blackjack
 		dealer2 = draw(); 
 		player_sum = player1 + player2;
 		dealer_sum = dealer1 + dealer2;
-		String choice = "hit";
-// why does this return error 'string choice is already defined in method main'?
+		String player_choice = "hit";
+		String whose_turn = "player";
+
 
 		System.out.println("Welcome to blackjack\nYou got a "+player1+" and a "+player2+"\nYour total is "+player_sum);
 		System.out.println("\nThe dealer has a "+dealer1+" showing, and a hidden card\nHis total is hidden too");
 
-		// TODO first, have player and dealer alternate turns	
-		while ((player_sum < 21) && choice.equals("hit")) {
-//		while (player_sum < 21) {
-			System.out.println("\nYour sum is "+player_sum);
-			System.out.print("Would you like to 'hit' or 'stay'? ");
-			choice = keyboard.next();
 
-			if (choice.equals("hit")) {
-				player_sum = turn(player_sum);
+		while (((player_sum <= 21) && (player_choice.equals("hit"))) || (dealer_sum <=16)) {
+
+			if ((whose_turn.equals("player")) && (player_choice.equals("hit")) && (player_sum <=21)) {
+
+				System.out.println("\nYour turn. Your sum is "+player_sum);
+				System.out.print("Would you like to 'hit' or 'stay'? ");
+				player_choice = keyboard.next();
+
+				if (player_choice.equals("hit")) {
+					player_sum = turn(player_sum);
+					System.out.println("Your new sum is "+player_sum);
+					if (player_sum > 21) {
+						break;
+					}
+				}
+
+				whose_turn = "dealer";
 			}
 
-			else {
-				System.out.println("It is the dealer's turn");
-
-				while (dealer_sum < 16) {
-					System.out.println("\nDealer's sum is "+dealer_sum);
+			if (whose_turn.equals("dealer")) {
+				System.out.println("\nIt is the dealer's turn");
+				
+				if (dealer_sum < 16) {
+					System.out.println("Dealer hits");
 					dealer_sum = turn(dealer_sum);
-					}
+				}
+				
+				whose_turn = "player";
 			}
 		}	
 		
